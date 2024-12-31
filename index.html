@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Load index.html from Google Drive</title>
+</head>
+<body>
+  <h1>Google Driveからindex.htmlを読み込み</h1>
+  <div id="content">Loading...</div>
+
+  <script>
+    // Google Driveの共有リンクからファイルIDを設定
+    const fileId = "10sGlZ-LvIJQhy47wNAWnRfPy8xqOqMKf"; // 置き換えてください
+    const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+    // fetchを使ってファイルを取得し、内容を表示
+    fetch(downloadUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch the file.");
+        }
+        return response.text(); // ファイル内容をテキストとして取得
+      })
+      .then(data => {
+        // 取得したHTMLをページ内に挿入
+        document.getElementById("content").innerHTML = data;
+      })
+      .catch(error => {
+        console.error("Error loading file:", error);
+        document.getElementById("content").textContent = "Failed to load the content.";
+      });
+  </script>
+</body>
+</html>
+
